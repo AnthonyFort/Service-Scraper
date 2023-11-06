@@ -18,14 +18,24 @@ for df in dataframes:
   df.columns.values[0] = "music_item"
   df.columns.values[-1] = "readings"
 
+print(df2)
+
+# TODO make df1 and df2 have the same number of columns (one for music and one for readings)
+
+for df in dataframes:
+  if df.columns[1] != df.columns[-1]:
+    df.drop(df.columns[1], axis=1, inplace=True)
+
+
 cols1 = len(df1.axes[1])
 print(cols1)
 
 cols2 = len(df2.axes[1])
 print(cols2)
 
-# TODO make df1 and df2 have the same number of columns (one for music and one for readings)
+print(df2)
 
+# ! WHY ARE BOTH COLUMNS UNPOPULATED NOW?
 
 # pdfs = [
 #   dfs,
