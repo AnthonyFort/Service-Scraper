@@ -1,39 +1,55 @@
 import pandas as pd
 import tabula
+import camelot
 
 pdf_path = "https://asms.uk/wp-content/uploads/2023/11/music-list_2023-11-01_2023-11-30.pdf"
 pdf_path_2 = "https://asms.uk/wp-content/uploads/2023/08/music-list_2023-09-01_2023-09-30.pdf"
 
+camelot_1 = camelot.read_pdf(pdf_path, pages="all", flavor='stream')
+cam_1_df = camelot_1[0].df
+
+cam_1_df['hasAnthem'] = cam_1_df[0].apply(lambda entry: 'Anthem' in entry )
+
+anthems_and_readings = cam_1_df.loc[cam_1_df['hasAnthem'], [1, 2]]
+
+print(anthems_and_readings)
+
+# print(cam_1_df)
+
+# print(cam_1_df[2])
+
+
+
 # Stores pdf info in dataframe
-df1 = pd.DataFrame(tabula.read_pdf(pdf_path, pages="all", stream=True)[0])
-df2 = pd.DataFrame(tabula.read_pdf(pdf_path_2, pages="all", stream=True)[0])
+# df1 = pd.DataFrame(camelot.read_pdf(pdf_path, pages="all", stream=True)[0])
+# df2 = pd.DataFrame(camelot.read_pdf(pdf_path_2, pages="all", stream=True)[0])
 
-dataframes = [
-  df1,
-  df2
-]
+# dataframes = [
+#   df1,
+#   df2
+# ]
 
-# Set column names
-for df in dataframes:
-  df.columns.values[0] = "music_item"
-  df.columns.values[-1] = "readings"
+# # Set column names
+# for df in dataframes:
+#   df.columns.values[0] = "music_item"
+#   df.columns.values[-1] = "readings"
 
-print(df2)
+# print(df2)
 
 # TODO make df1 and df2 have the same number of columns (one for music and one for readings)
 
-for df in dataframes:
-  if df.columns[1] != df.columns[-1]:
-    df.drop(df.columns[1], axis=1, inplace=True)
+# for df in dataframes:
+#   if df.columns[1] != df.columns[-1]:
+#     df.drop(df.columns[1], axis=1, inplace=True)
 
 
-cols1 = len(df1.axes[1])
-print(cols1)
+# cols1 = len(df1.axes[1])
+# print(cols1)
 
-cols2 = len(df2.axes[1])
-print(cols2)
+# cols2 = len(df2.axes[1])
+# print(cols2)
 
-print(df2)
+# print(df2)
 
 # ! WHY ARE BOTH COLUMNS UNPOPULATED NOW?
 
