@@ -1,12 +1,29 @@
 import pandas as pd
 import tabula
 import camelot
+from PyPDF2 import PdfFileReader, PdfFileMerger
+import os
 
-pdf_path = "https://asms.uk/wp-content/uploads/2023/11/music-list_2023-11-01_2023-11-30.pdf"
-pdf_path_2 = "https://asms.uk/wp-content/uploads/2023/08/music-list_2023-09-01_2023-09-30.pdf"
+pdfs = [
+  "https://asms.uk/wp-content/uploads/2023/11/music-list_2023-11-01_2023-11-30.pdf",
+  "https://asms.uk/wp-content/uploads/2023/08/music-list_2023-09-01_2023-09-30.pdf"
+]
 
-camelot_1 = camelot.read_pdf(pdf_path, pages="all", flavor='stream')
+path = './music_lists'
+pdf_files = os.listdir(path)
+
+output = PdfFileMerger()
+
+for file in pdf_files:
+    absfile = os.path.join(path, file)
+    print(absfile)
+    output.append(absfile)
+    output.write("merged.pdf")
+
+camelot_1 = camelot.read_pdf('merged.pdf', pages="all", flavor='stream')
 cam_1_df = camelot_1[0].df
+
+print(cam_1_df)
 
 cam_1_df['hasAnthem'] = cam_1_df[0].apply(lambda entry: 'Anthem' in entry )
 
@@ -14,9 +31,7 @@ anthems_and_readings = cam_1_df.loc[cam_1_df['hasAnthem'], [1, 2]]
 
 print(anthems_and_readings)
 
-# print(cam_1_df)
 
-# print(cam_1_df[2])
 
 
 
