@@ -1,7 +1,8 @@
 import pandas as pd
 import tabula
 import camelot
-from PyPDF2 import PdfFileReader, PdfFileMerger
+# from PyPDF2 import PdfFileReader, PdfFileMerger
+from PyPDF4 import PdfFileMerger
 import os
 
 pdfs = [
@@ -18,13 +19,15 @@ for file in pdf_files:
     absfile = os.path.join(path, file)
     print(absfile)
     output.append(absfile)
-    output.write("merged.pdf")
+    
+output.write("merged.pdf")
 
-camelot_1 = camelot.read_pdf('merged.pdf', pages="all", flavor='stream')
-cam_1_df = camelot_1[0].df
+# camelot_1 = camelot.read_pdf('merged.pdf', pages="all", flavor='stream')
+# cam_1_df = camelot_1[0].df
 
-contain_anthems = cam_1_df[cam_1_df[0].str.contains("Anthem")]
-print(contain_anthems)
+# contain_anthems = cam_1_df[cam_1_df[0].str.contains("Anthem")]
+# print(contain_anthems)
+
 
 
 
