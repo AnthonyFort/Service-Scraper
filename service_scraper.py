@@ -23,13 +23,17 @@ for file in pdf_files:
 camelot_1 = camelot.read_pdf('merged.pdf', pages="all", flavor='stream')
 cam_1_df = camelot_1[0].df
 
-print(cam_1_df)
+contain_anthems = cam_1_df[cam_1_df[0].str.contains("Anthem")]
+print(contain_anthems)
 
-cam_1_df['hasAnthem'] = cam_1_df[0].apply(lambda entry: 'Anthem' in entry )
 
-anthems_and_readings = cam_1_df.loc[cam_1_df['hasAnthem'], [1, 2]]
 
-print(anthems_and_readings)
+
+# cam_1_df['hasAnthem'] = cam_1_df[0].apply(lambda entry: 'Anthem' in entry )
+
+# anthems_and_readings = cam_1_df.loc[cam_1_df['hasAnthem'], [1, 2]]
+
+# print(anthems_and_readings)
 
 
 
