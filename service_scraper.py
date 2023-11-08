@@ -15,20 +15,28 @@ pdf_files = os.listdir(path)
 
 output = PdfFileMerger()
 
+# Merges pdf files into single pdf
 for file in pdf_files:
     absfile = os.path.join(path, file)
-    print(absfile)
     output.append(absfile)
     
 output.write("merged.pdf")
 
-# camelot_1 = camelot.read_pdf('merged.pdf', pages="all", flavor='stream')
-# cam_1_df = camelot_1[0].df
+camelot_1 = camelot.read_pdf('merged.pdf', pages="all", flavor='stream')
 
-# contain_anthems = cam_1_df[cam_1_df[0].str.contains("Anthem")]
-# print(contain_anthems)
+# Initialises dataframe
+cam_1_df = camelot_1[0].df
 
+#Concatenates all pages from the pdf
+for table in camelot_1:
+    if table != camelot_1[0]:
+        cam_1_df = pd.concat([cam_1_df, table.df], ignore_index=True)
+     
+# Prints out rows containing anthems
+contain_anthems = cam_1_df[cam_1_df[0].str.contains("Anthem")]
+print(contain_anthems)
 
+# print(cam_1_df)
 
 
 
